@@ -1,0 +1,135 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Tue Oct 23 21:59:30 2018
+
+@author: user
+"""
+
+import numpy as np
+import matplotlib.pyplot as plt
+
+def funtionEuler(h,funcion,resultados):
+    for i in range(len(resultados)):
+        answers = funcion[i] + (resultados[i] * h)
+        funcion.append(answers)
+        #x[i] = x[i - 1] + h
+    return  funcion 
+
+paso11 = 0.367/10.0
+paso12 = (0.733-0.4)/9.0
+paso21 = 0.333/9.0
+paso22 = (0.533-0.333)/7.0
+
+#caida libre
+A11 = [-9.8 for i in range(10)]
+V11 = [0]
+H11 = [1.78]
+
+V11 = funtionEuler(paso11,V11,A11)
+H11 = funtionEuler(paso11,H11,V11)
+
+H1 = [
+1.779788913E0,
+1.744170476E0,
+1.711291919E0,
+1.659234204E0,
+1.593477089E0,
+1.522240216E0,
+1.426344425E0,
+1.308529595E0,
+1.177015367E0]
+
+
+
+#Flexiona mucho V1
+A12 = [-6.75 for i in range(4)]
+V12 = [-(0.733-0.4)*9.8]
+H12 = [0.98]
+
+V12 = funtionEuler(paso12,V12,A12)
+H12 = funtionEuler(paso12,H12,V12)
+
+
+H111 = [1.012622582E0,
+8.415579495E-1,
+7.485750829E-1,
+6.749636469E-1,
+5.858550665E-1,
+5.277407749E-1,
+4.773750556E-1,
+4.425064806E-1,
+4.192607640E-1,
+4.153864779E-1]
+
+#Flexiona poco V2
+A22 = [-29.56 for i in range(2)]
+V22 = [-(0.533-0.333)*9.8]
+H22 = [0.98]
+
+V22 = funtionEuler(paso22,V22,A22)
+H22 = funtionEuler(paso22,H22,V22)
+
+
+H1111 = [
+9.617806025E-1,
+8.126955185E-1,
+7.690608598E-1,
+7.363348658E-1,
+]
+#Tiempo caida libre
+T11 = []
+for i in range(12):
+    T11.append(paso11*i)
+
+#Tiempo flexiona mucho  
+T12 = []
+for i in range(6):
+    T12.append(paso12*i) 
+
+#Tiempo flexiona poco
+T22 = []
+for i in range(4):
+    T22.append(paso22*i)
+    
+print (len(T22))
+print (len(H1111))
+print (H22)
+#print (V22)
+#print (H22)
+
+#plt.plot(T11,H11)
+#T11.pop()
+#T11.pop()
+#T11.pop()
+#plt.plot(T11,H1)
+######################################
+#plt.plot(T12,H12)
+#H111.pop()
+#H111.pop()
+#H111.pop()
+#H111.pop()
+#plt.plot(T12,H111)
+######################################
+#plt.plot(T22,H22)
+#plt.plot(T22,H1111)
+
+
+fig = plt.figure(figsize=(20,16), dpi=50)
+ax = fig.add_subplot(111)
+
+ax.plot(T12,H12,linewidth=1,linestyle='-',marker=',',markersize=10,color='k')
+H111.pop()
+H111.pop()
+H111.pop()
+H111.pop()
+ax.plot(T12,H111,linewidth=1,linestyle='-',marker=',',markersize=10,color='b')
+ax.set_xlim(0,0.2)
+ax.set_ylim(0.3,1.1)
+ax.set_xlabel('t',fontsize=25)
+ax.set_ylabel('y(t)',fontsize=25)
+ax.tick_params(direction='out', length=6, width=2, labelsize=20)
+
+plt.savefig("y-t-2.pdf")
+plt.draw()
+
+plt.show()
