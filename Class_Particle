@@ -1,0 +1,31 @@
+
+class Particle:
+    
+    def __init__(self,posicion,velocidad):
+        
+        self.posicion = posicion
+        self.velocidad = velocidad
+        
+        
+    def move(self,t): 
+        nueva_pos = (self.posicion[0]+self.velocidad[0]*t,self.posicion[1]+self.velocidad[1]*t)
+        self.posicion = nueva_pos
+
+        
+    def times(self,particulas,Lx,Ly):
+        
+        return 0
+    
+    def ChangeMomentum(self,a,b):
+        
+        if a.posicion == None:
+            
+        
+        if b.posicion == None:
+            
+            
+            
+            
+        return 0
+    
+             
