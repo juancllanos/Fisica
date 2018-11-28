@@ -1,0 +1,114 @@
+# -*- coding: utf8 -*-
+import math
+
+def AND(a,b):
+
+    if b == 0 and a == 0:
+        return 0
+    #Si ambos inputs son cero, no se hace simulacion porque no entra nada.
+    
+    if a == 0:
+        print " (0,1) "
+        p = 0
+        q =[[0,4],[2,4]]
+        c = time(p,q,10,1)
+        return q[0]
+        #Creamos la particula si a es 0.
+        
+    if b == 0:
+        p = [[0,2],[2,-4]]
+        q = 0
+        c = time(p,q,0,1)
+        return p[0]
+        #Creamos la particula si b es 0.
+
+
+    else:
+        p = [[0,2],[2,-4]]
+        q = [[0,4],[2,4]]
+        c = time(p,q,0,1)
+        changeM(p,q,2)
+        c = time(p,q,0,1)
+        return p[1],q[1]
+        #Se crean las dos particulas.
+        
+
+
+
+def time(a,b,c,om):
+    # a y b: 1 y 0
+    # c: limite en el caso que siga derecho( 0 o Ly)
+    # om: sigma, diametro de la partícla
+    if b != 0 and a != 0:
+        rij = [a[0][0]-b[0][0],a[0][1]-b[0][1]]
+        vij = [a[1][0]-b[1][0],a[1][1]-b[1][1]]
+
+        #rij.vij
+        rvij = multVec(rij,vij)
+        print rvij
+        #Norma de vij2
+        vij2 = multVec(vij,vij)
+        print vij2
+        #Norma de rij al cuadrado
+        rij2 = multVec(rij,rij)
+        print rij2
+
+        t = float((-(rvij)-math.sqrt(rvij**2-vij2*(rij2-om**2)))*1/vij2)
+        #Si a y b son inicializadas entonces se halla el tiempo de colision.
+        
+    if b == 0:
+        print "c :",c,"y :",a[0][1],"vy :",a[1][1]
+        t = float((om/2)-a[0][1])/a[1][1]
+        print t,c
+        nx = a[0][0]+a[1][0]*t
+        #ny = a[0][1]+a[1][1]*t
+        ny = om/2.
+        a[0][0] = nx
+        a[0][1] = ny
+
+        #Si b no se inicializa se halla el tiempo
+
+    if a == 0:
+        t = (c-(om/2)-b[0][1])/b[1][1]
+        print "t :",t
+        #ny = b[0][1]+b[1][1]*t
+        ny = c - (om/2.)
+        nx = b[0][0]+b[1][0]*t
+        b[0][0] = nx
+        b[0][1] = ny
+
+    return t
+        
+        
+        
+        
+    
+
+def changeM(a,b,om):
+    rij = [a[0][0]-b[0][0],a[0][1]-b[0][1]]
+    vij = [a[1][0]-b[1][0],a[1][1]-b[1][1]]
+
+    mult(1/om,rij)
+    print rij
+    vp = multVec(vij,mult(1/om,rij))
+ 
+    dv = mult(-1,vp)
+
+    va = suma(a[1],dv)
+    vb = suma(b[1],-dv)
+    a[1] = va
+    b[1] = vb
+
+def suma(a,b):
+    c = a[0]
+def multVec(a,b):
+    #producto escalar entre a y b:
+    return a[0]*b[0]+a[1]*b[1]
+def mult(a,b):
+    b[0] = a*b[0]
+    b[1] = a*b[1]
+
+print(AND(1,1))
+#print(AND(0,1))
+#print(AND(1,0))
+    
